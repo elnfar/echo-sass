@@ -7,14 +7,14 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("POSTGRES_PRISMA_URL")
 }
 
 model Tenant {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  name String @unique
+  name String?
   users User[]
   activities Activity[]
 }
@@ -24,6 +24,7 @@ model User {
     id String @id @default(uuid())
     email String @unique
     name  String?
+    avatar String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     tenantId String?
