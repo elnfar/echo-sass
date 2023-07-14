@@ -1,6 +1,10 @@
+
 export default function TrackTime() {
   return (
-    <div>Main Page</div>
+    <main>
+        Main page /track
+    </main>
   )
 }
+
 
