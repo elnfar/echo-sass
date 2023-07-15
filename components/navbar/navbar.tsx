@@ -1,8 +1,8 @@
-'use client'
 import { Avatar } from "@radix-ui/react-avatar"
 import Link from "next/link"
 import { AvatarImage } from "../ui/avatar"
-
+import { getUserSession } from "@/lib/auth"
+import AvatarComponent from "../avatar"
 
 const links = [
     {
@@ -11,10 +11,9 @@ const links = [
     }
 ]
 
-export default function Navbar({user}:any) {
+export default async function Navbar() {
 
-    
-    
+    const user = await getUserSession();
 
   return (
     <div className="shadow">
@@ -25,7 +24,7 @@ export default function Navbar({user}:any) {
                 <nav>
                     <ul>
                         {links.map(({href,label}) => (
-                            <li>
+                            <li key={label}>
                                 <Link href={href}>{label}</Link>
                             </li>
                         ))}
@@ -33,9 +32,7 @@ export default function Navbar({user}:any) {
                 </nav>
         
                 </div>
-                    <Avatar className="">
-                        <AvatarImage className="w-[50px] h-[50px] rounded-full" src={user.image} referrerPolicy="no-referrer"/>
-                    </Avatar>
+                <AvatarComponent user={user}/>
         </div>
     </div>
   )

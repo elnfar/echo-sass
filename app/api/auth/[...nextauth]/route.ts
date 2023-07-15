@@ -29,9 +29,7 @@ const authOptions:NextAuthOptions = {
                     email:profile?.email,
                     name:profile?.name,
                     avatar:(profile as any).picture,
-                    tenant:{
-                        create:{}
-                    }
+                    tenant:{}
                 },
                 update: {
                     name:profile.name,

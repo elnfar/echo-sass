@@ -12,15 +12,6 @@ datasource db {
 
 }
 
-model Tenant {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name String?
-  users User[]
-  activities Activity[]
-}
-
 
 model User {
     id String @id @default(uuid())
@@ -29,10 +20,22 @@ model User {
     avatar String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    tenantId String?
-    tenant Tenant? @relation(fields: [tenantId], references: [id])
+    tenantId String
+    tenant Tenant @relation(fields: [tenantId], references: [id])
     activites Activity[]
+    @@index([tenantId])
 }
+
+model Tenant {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String?
+  users User[]
+  activities Activity[]
+
+}
+
 
 model Activity {
     id String @id @default(uuid())
@@ -41,8 +44,12 @@ model Activity {
     endAt DateTime?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    tenantId String?
-    tenant Tenant? @relation(fields: [tenantId],references: [id])
+    tenantId String
+    tenant Tenant @relation(fields: [tenantId],references: [id])
     userId String
-    user User? @relation(fields: [userId],references: [id])
+    user User @relation(fields: [userId],references: [id])
+
+
+    @@index([userId])
+    @@index([tenantId])
 }
