@@ -6,13 +6,35 @@ import { Activity } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 
+
+
+type TimeProps = {
+  startAt:string
+}
+
+const Time = ({startAt}:TimeProps) => {
+
+  const date = new Date(startAt);
+  const now = new Date();
+  const elapsed = now.getTime() - date.getTime()
+
+  return (
+    <div>
+      {elapsed}
+    </div>
+  )
+}
+
+
+
+
 type NewActivityProps = {
-    activity?:Activity
+    activity?:Activity | null
 }
 
 const NewActivity = ({activity}:NewActivityProps) => {
 
-  async function createActivity(data:FormData){
+  async function startActivity(data:FormData){
     'use server'
 
     const user = await getUserSession()
@@ -30,14 +52,32 @@ const NewActivity = ({activity}:NewActivityProps) => {
       revalidatePath('/track')
   }
 
+  async function stopActivity(data:FormData) {
+    'use server'
+
+    await prisma.activity.update({
+      where: {
+        id:data.get('id') as string
+      },
+      data: {
+        endAt:new Date()
+      }
+    })
+
+    revalidatePath('/track')
+
+  }
+
   return (
     <div>
       <h2>What are you working on ?</h2>
 
-      <form action={createActivity}>
+      <form action={activity ? stopActivity : startActivity}>
         <div className="flex items-center mx-auto space-x-4">
         <Input name="name" type="text" defaultValue={activity?.name || ''}/>
-        <Button type="submit" value="submit">Start</Button>
+        <input type="hidden" name="id" defaultValue={activity?.id || ''}/>
+        {activity && ( <Time startAt={activity.startAt.toString()}/>)} 
+        <Button type="submit" value="submit">{activity ? 'Stop':'Start'}</Button>
         </div>
       </form>
       
@@ -60,7 +100,7 @@ export default async function TrackTimePage() {
 
   return (
     <main  className="container py-4">
-      <NewActivity/>
+      <NewActivity activity={currentActivity}/>
     </main>
   )
 }
