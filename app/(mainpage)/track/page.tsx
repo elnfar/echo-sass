@@ -4,6 +4,7 @@ import { getUserSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { Activity } from "@prisma/client"
 import { revalidatePath } from "next/cache"
+import Duration from "./duration"
 
 
 
@@ -73,10 +74,10 @@ const NewActivity = ({activity}:NewActivityProps) => {
       <h2>What are you working on ?</h2>
 
       <form action={activity ? stopActivity : startActivity}>
-        <div className="flex items-center mx-auto space-x-4">
+        <div className="flex items-center space-x-4">
         <Input name="name" type="text" defaultValue={activity?.name || ''}/>
         <input type="hidden" name="id" defaultValue={activity?.id || ''}/>
-        {activity && ( <Time startAt={activity.startAt.toString()}/>)} 
+        {activity && ( <Duration startAt={activity.startAt}/>)} 
         <Button type="submit" value="submit">{activity ? 'Stop':'Start'}</Button>
         </div>
       </form>
