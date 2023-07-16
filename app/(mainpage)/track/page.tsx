@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma"
 import { Activity } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 import Duration from "./duration"
+import { ArrowRightIcon } from "@radix-ui/react-icons"
+import ActivityItem from "./activity-item"
 
 
 
@@ -86,6 +88,23 @@ const NewActivity = ({activity}:NewActivityProps) => {
   )
 }
 
+type DailyActivityProps = {
+  activities:Activity[]
+}
+
+
+const DailyActivities = ({activities}:DailyActivityProps) => {
+    return (
+      <div className="py-12">
+        <ul>
+        {activities.map((activity) => (
+         <ActivityItem activity={activity} key={activity.id}/>
+        ))}
+        </ul>
+      </div>
+    )
+}
+
 export default async function TrackTimePage() {
 
   const user = await getUserSession()
@@ -99,9 +118,36 @@ export default async function TrackTimePage() {
     }
   })
 
+  const now = new Date();
+  const startOfToday =  new Date(now.getFullYear(),now.getMonth(),now.getDate())
+  const endOfToday =  new Date(now.getFullYear(),now.getMonth(),now.getDate(),23,59,59)
+
+
+  const dailyActivities = await prisma.activity.findMany({
+    where: {
+      tenantId:user.tenantId,
+      userId:user.id,     
+     OR: [
+      {
+        startAt: {
+          equals:startOfToday
+        }
+      },
+      {
+        endAt:{
+          lte:endOfToday
+        }
+      }
+     ]
+    },
+    orderBy: {
+      startAt:"asc"
+    }
+  })
   return (
     <main  className="container py-4">
       <NewActivity activity={currentActivity}/>
+      <DailyActivities activities={dailyActivities}/>
     </main>
   )
 }
