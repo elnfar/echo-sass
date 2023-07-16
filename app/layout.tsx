@@ -16,12 +16,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const user = await getUserSession()
 
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Navbar user={user}/>
+      <Navbar/>
         {children}
         </body>
     </html>

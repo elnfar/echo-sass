@@ -5,6 +5,8 @@ import { Activity } from "@prisma/client"
 import { useState } from "react"
 import { updateActivity } from "./actions"
 import { Button } from "@/components/ui/button"
+import { Calendar } from "lucide-react"
+import { pad } from "@/utils/pad"
 
 
 
@@ -17,6 +19,35 @@ type EditItemProps = Props & {
     onSave:() => void
 }
 
+type EditDayTimeProps = {
+    value:Date
+    onChange:(date:Date) => void
+}
+
+const EditDayTime = ({value,onChange}:EditDayTimeProps) => {
+
+    const [date,setDate] = useState(value)
+
+    return (
+        <div>
+            <div className="relative">
+                <Input type="time" value={`${pad(date.getHours())}:${pad(date.getMinutes())}`} name="time" 
+                onChange={(e) => {
+                    const [hours,minutes] = e.target.value.split(':');
+                    const newDate = new Date(date);
+                    newDate.setHours(parseInt(hours))
+                    newDate.setMinutes(parseInt(minutes))
+                    setDate(newDate);
+                    onChange(newDate);
+
+                }}
+                />
+                <Calendar size={16} className="absolute"/>
+            </div>      
+        </div>
+    )
+}
+
 
 const EditItem = ({activity, onSave}:EditItemProps) => {
     return (
@@ -26,6 +57,7 @@ const EditItem = ({activity, onSave}:EditItemProps) => {
                 onSave()
             }}>
                 <Input type="text" name="name" defaultValue={activity.name || ''}/>
+                <EditDayTime value={activity.startAt} onChange={() => {}}/>
                 <Button type="submit">Save</Button>
             </form>
         </li>
