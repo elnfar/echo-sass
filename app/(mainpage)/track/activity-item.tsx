@@ -20,25 +20,27 @@ type EditItemProps = Props & {
 }
 
 type EditDayTimeProps = {
+    name?:string
     value:Date
-    onChange:(date:Date) => void
+    onChange?:(date:Date) => void
 }
 
-const EditDayTime = ({value,onChange}:EditDayTimeProps) => {
+const EditDayTime = ({value,name,onChange}:EditDayTimeProps) => {
 
     const [date,setDate] = useState(value)
 
     return (
         <div>
             <div className="relative">
-                <Input type="time" value={`${pad(date.getHours())}:${pad(date.getMinutes())}`} name="time" 
+                <input type="hidden" name={name} defaultValue={date.toISOString()}/>
+                <Input type="time" value={`${pad(date.getHours())}:${pad(date.getMinutes())}`}
                 onChange={(e) => {
                     const [hours,minutes] = e.target.value.split(':');
                     const newDate = new Date(date);
-                    newDate.setHours(parseInt(hours))
-                    newDate.setMinutes(parseInt(minutes))
+                    newDate.setHours(parseInt(hours) || 0)
+                    newDate.setMinutes(parseInt(minutes) || 0)
                     setDate(newDate);
-                    onChange(newDate);
+                    onChange && onChange(newDate);
 
                 }}
                 />
@@ -57,7 +59,9 @@ const EditItem = ({activity, onSave}:EditItemProps) => {
                 onSave()
             }}>
                 <Input type="text" name="name" defaultValue={activity.name || ''}/>
-                <EditDayTime value={activity.startAt} onChange={() => {}}/>
+                <EditDayTime name="startAt" value={activity.startAt} />
+                <EditDayTime name="endAt" value={activity.endAt || new Date()} />
+
                 <Button type="submit">Save</Button>
             </form>
         </li>
