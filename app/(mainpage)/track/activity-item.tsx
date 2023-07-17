@@ -5,8 +5,11 @@ import { Activity } from "@prisma/client"
 import { useState } from "react"
 import { updateActivity } from "./actions"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "lucide-react"
+
 import { pad } from "@/utils/pad"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { CalendarIcon } from "lucide-react"
+import { Calendar } from "@/components/ui/calendar"
 
 
 
@@ -25,9 +28,22 @@ type EditDayTimeProps = {
     onChange?:(date:Date) => void
 }
 
+
 const EditDayTime = ({value,name,onChange}:EditDayTimeProps) => {
 
     const [date,setDate] = useState(value)
+
+
+        const onDate = (d:Date | undefined) => {
+            if(!d) return
+            d.setHours(date.getHours())
+            d.setMinutes(date.getMinutes())
+            d.setSeconds(date.getSeconds())
+            setDate(d)
+            onChange && onChange(d);
+            console.log(date,d);
+            
+        }
 
     return (
         <div>
@@ -44,7 +60,20 @@ const EditDayTime = ({value,name,onChange}:EditDayTimeProps) => {
 
                 }}
                 />
-                <Calendar size={16} className="absolute"/>
+
+                <Popover>
+                    <PopoverTrigger>
+                        <CalendarIcon size={16} className="absolute"/>
+                    </PopoverTrigger>
+                <PopoverContent>
+                    <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={onDate}
+                    />
+                </PopoverContent>
+                </Popover>
+                
             </div>      
         </div>
     )
