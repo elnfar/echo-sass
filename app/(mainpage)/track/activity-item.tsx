@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input"
 import { Activity } from "@prisma/client"
 import { useState } from "react"
-import { updateActivity } from "./actions"
+import { deleteActivity, updateActivity } from "./actions"
 import { Button } from "@/components/ui/button"
 
 import { pad } from "@/utils/pad"
@@ -87,6 +87,7 @@ const EditItem = ({activity, onSave}:EditItemProps) => {
                 await updateActivity(data)
                 onSave()
             }}>
+                <input type="hidden" defaultValue={activity.id} name="id"/>
                 <Input type="text" name="name" defaultValue={activity.name || ''}/>
                 <EditDayTime name="startAt" value={activity.startAt} />
                 <EditDayTime name="endAt" value={activity.endAt || new Date()} />
@@ -98,7 +99,12 @@ const EditItem = ({activity, onSave}:EditItemProps) => {
 }
 
 
-export const ReadItemRow = ({activity}:Props) => {
+type ReadItemProps = Props & {
+    edit:() => void
+    onDelete:(id:string) => void
+}
+
+export const ReadItemRow = ({activity,onDelete,edit,}:ReadItemProps) => {
 
     return (
     <li className="py-2 flex items-center">
@@ -119,6 +125,9 @@ export const ReadItemRow = ({activity}:Props) => {
                 minute:"numeric"
               }).format(activity.endAt || new Date())}
             </span>
+            <span></span>
+            <Button onClick={edit}>Edit</Button>
+            <Button onClick={async () => onDelete(activity.id)} variant="destructive">Delete</Button>
             </li>
     )
 }
@@ -133,8 +142,7 @@ export default function ActivityItem({activity}:Props) {
         <EditItem activity={activity} onSave={() => setIsEditing(false)}/>
     ):(
         <>
-        <ReadItemRow activity={activity}/>
-        <button onClick={() => setIsEditing(true)}>Edit</button>
+        <ReadItemRow activity={activity} edit={() => setIsEditing(true)} onDelete={deleteActivity}/>
         </>
     )
 }
