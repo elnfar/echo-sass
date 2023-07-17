@@ -8,6 +8,10 @@ const links = [
     {
         href:'/track',
         label:'Tracks'
+    },
+    {
+        href:'/clients',
+        label:'Clients'
     }
 ]
 
@@ -22,7 +26,7 @@ export default async function Navbar() {
                 <Link href='/'>EchoT</Link>
 
                 <nav>
-                    <ul>
+                    <ul className="flex gap-4">
                         {links.map(({href,label}) => (
                             <li key={label}>
                                 <Link href={href}>{label}</Link>

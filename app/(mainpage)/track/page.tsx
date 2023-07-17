@@ -15,20 +15,6 @@ type TimeProps = {
   startAt:string
 }
 
-const Time = ({startAt}:TimeProps) => {
-
-  const date = new Date(startAt);
-  const now = new Date();
-  const elapsed = now.getTime() - date.getTime()
-
-  return (
-    <div>
-      {elapsed}
-    </div>
-  )
-}
-
-
 
 
 type NewActivityProps = {
@@ -43,7 +29,7 @@ const NewActivity = ({activity}:NewActivityProps) => {
     const user = await getUserSession()
     console.log(user);
     
-    const activity = await prisma.activity.create({
+     await prisma.activity.create({
       data: {
         user: {connect:{id:user.id}},
         tenant: {connect:{id:user.tenant.id}},
@@ -63,7 +49,8 @@ const NewActivity = ({activity}:NewActivityProps) => {
         id:data.get('id') as string
       },
       data: {
-        endAt:new Date()
+        endAt:new Date(),
+        name: data.get('name') as string,
       }
     })
 
