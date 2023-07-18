@@ -1,5 +1,8 @@
 import { getUserSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 
 type ClientPageProps = {
     params: {
@@ -23,6 +26,25 @@ export default async function ClientsPage({params}:ClientPageProps) {
     }
     return (
       <div  className="container py-4">
+            <div>
+        <h2>Client</h2>
+    
+
+        <DropdownMenu>
+            <DropdownMenuTrigger>
+                <MoreHorizontal/>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                <DropdownMenuItem>
+                     <Link href={`/clients/${client.id}/edit`}>
+                        Edit
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>Delete</DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+
+</div>
             <h3>{client.name}</h3>
       </div>
     )
