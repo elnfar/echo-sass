@@ -10,13 +10,6 @@ import ActivityItem from "./activity-item"
 
 
 
-
-type TimeProps = {
-  startAt:string
-}
-
-
-
 type NewActivityProps = {
     activity?:Activity | null
 }
@@ -97,9 +90,11 @@ export default async function TrackTimePage() {
   const user = await getUserSession()
 
   
+  
   const currentActivity = await prisma.activity.findFirst({
+
     where: {
-      tenantId:user.tenantId,
+      tenantId:user.tenant?.id,
       userId:user.id,     
       endAt:null
     }
@@ -112,7 +107,7 @@ export default async function TrackTimePage() {
 
   const dailyActivities = await prisma.activity.findMany({
     where: {
-      tenantId:user.tenantId,
+      tenantId:user.tenant.id,
       userId:user.id,     
      OR: [
       {
