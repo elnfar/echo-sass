@@ -3,6 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 type ClientPageProps = {
     params: {
@@ -24,12 +27,27 @@ export default async function ClientsPage({params}:ClientPageProps) {
     if(!client) {
         return <div>Client not found!</div>
     }
+
+
+    async function deleteClient() {
+        'use server'
+
+        if(!client) throw new Error('Client not found');
+        await prisma.client.deleteMany({
+            where: {
+                tenantId:user.tenant.id,
+                id:client.id
+            }
+        })
+        redirect('/clients')
+    }
+
     return (
       <div  className="container py-4">
             <div>
         <h2>Client</h2>
     
-
+        <Dialog>
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <MoreHorizontal/>
@@ -40,9 +58,27 @@ export default async function ClientsPage({params}:ClientPageProps) {
                         Edit
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Delete</DropdownMenuItem>
+                <DialogTrigger asChild>
+                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                </DialogTrigger>
             </DropdownMenuContent>
         </DropdownMenu>
+                    <DialogContent>
+                <DialogHeader>
+                <DialogTitle>Dou you want to confirm, you delete the client {client.name}</DialogTitle>
+                <DialogDescription>
+                    This action cannot be undone. Are you sure you want to permanently
+                    delete this file from our servers?
+                </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                    <form action={deleteClient}>
+                      <Button type="submit" variant="destructive">Delete</Button>
+                    </form>               
+
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
 
 </div>
             <h3>{client.name}</h3>
