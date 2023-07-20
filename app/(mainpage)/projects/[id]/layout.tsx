@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { getUserSession } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { ProjectList } from '../projects'
 
 
 export const metadata: Metadata = {
@@ -30,7 +31,11 @@ export default async function ProjectsLayout({
 
   return (
     <div className='container mx-auto flex gap-4 divide-x-2 py-4'>
-        {children}
+        <div className='w-1/2 px-4'>
+            <ProjectList projects={projects}/>
+        </div>
+
+        <div className='px-4 flex-grow'>{children}</div>
     </div>
   )
 }

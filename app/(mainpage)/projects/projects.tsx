@@ -10,7 +10,7 @@ export const ProjectList = ({projects}:ProjectProps) => {
         <ul>
             {
                 projects.map((project) => (
-                    <li>
+                    <li key={project.id}>
                         <Link href={`/projects/${project.id}`}>{project.name}</Link>
                     </li>
                 ))
