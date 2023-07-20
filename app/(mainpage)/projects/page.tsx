@@ -1,19 +1,18 @@
 import { Button } from "@/components/ui/button"
 import { getUserSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Client } from "@prisma/client"
-import { ClientList, ClientListHeader } from "./client-list"
 import Link from "next/link"
+import { ProjectList } from "./projects"
 
 
 
 const BlackSlide = () => {
   return (
     <div>
-      <h2>Create a Client</h2>
-      <p>Create a client for keeping your work organized!</p>
+      <h2>Create a Project</h2>
+      <p>Create a project for keeping your work organized!</p>
       <Button asChild>
-        <Link href="/clients/new">Create</Link>
+        <Link href="/projects/new">Create</Link>
       </Button>
     </div>
   )
@@ -22,20 +21,22 @@ const BlackSlide = () => {
 
 
 
-export default async function ClientsPage() {
+export default async function ProjectPage() {
 
   const user = await getUserSession();
   
-  const clients =  await prisma.client.findMany({
+  const projects =  await prisma.project.findMany({
     where: {
       tenantId:user.tenant.id
+    },
+    orderBy:{
+        createdAt:'desc'
     }
   })
   
   return (
     <div  className="container py-4">
-     <ClientListHeader/>
-      {clients.length > 0 ? <ClientList clients={clients}/>:<BlackSlide/>}
+      {projects.length > 0 ? <ProjectList projects={projects}/>:<BlackSlide/>}
  
     </div>
   )

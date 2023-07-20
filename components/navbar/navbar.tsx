@@ -12,6 +12,10 @@ const links = [
     {
         href:'/clients',
         label:'Clients'
+    },
+    {
+        href:'/projects',
+        label:'Projects'
     }
 ]
 
