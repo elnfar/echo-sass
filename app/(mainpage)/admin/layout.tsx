@@ -16,7 +16,7 @@ const links = [
         label:'Team'
     },
     {
-        href:'/admin/Billing',
+        href:'/admin/billing',
         label:'Billing'
     }
 
