@@ -29,10 +29,16 @@ export default function AvatarComponent({user}:{user:Session['user']}) {
         <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="w-full cursor-pointer">
-          <Link href='/admin'>Profile</Link>
+          <Link href='/admin/profile'>Profile</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
+
+        <DropdownMenuItem asChild className="w-full cursor-pointer">
+          <Link href='/admin/team'>Team</Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild className="w-full cursor-pointer">
+          <Link href='/admin/billing'>Billing</Link>
+        </DropdownMenuItem>
         <Logout/>
       </DropdownMenuContent>
 </DropdownMenu>
