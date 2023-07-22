@@ -3,6 +3,7 @@ import { getUserSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
 import { ProjectList } from "./projects"
+import { redirect } from "next/navigation"
 
 
 
@@ -33,11 +34,14 @@ export default async function ProjectPage() {
         createdAt:'desc'
     }
   })
+
+  if(projects.length > 0) {
+    redirect(`/projects/${projects[0].id}`)
+  }
   
   return (
     <div  className="container py-4">
-      {projects.length > 0 ? <ProjectList projects={projects}/>:<BlackSlide/>}
- 
+      <BlackSlide/>
     </div>
   )
 }
