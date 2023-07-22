@@ -11,6 +11,7 @@ import { redirect } from "next/navigation";
 export default async function CreateProjectPage() {
     const user = await getUserSession();
 
+
     const clients = (await prisma.client.findMany({
         where: {
             tenantId:user.tenant.id
@@ -22,6 +23,7 @@ export default async function CreateProjectPage() {
 
     async function createProject(data:FormData) {
         'use server'
+        const client = data.get('client') as string
 
         const user = await getUserSession();
 
@@ -30,7 +32,7 @@ export default async function CreateProjectPage() {
                 tenantId:user.tenant.id,
                 name:data.get('name') as string,
                 color: data.get('color') as string,
-                clientId:data.get('client') as string
+                clientId:client ? client : undefined
             }
         })
 
@@ -59,7 +61,7 @@ export default async function CreateProjectPage() {
                         <SelectContent>
                             <SelectGroup>
                             <SelectLabel>Client</SelectLabel>
-
+                            <SelectItem value="">None</SelectItem>
                                 {clients.map((client) => (
                                       <SelectItem value={client.value} key={client.value}>{client.label}</SelectItem>
                                 ))}
