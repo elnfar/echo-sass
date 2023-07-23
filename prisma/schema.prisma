@@ -12,10 +12,11 @@ datasource db {
 }
 
 model Tenant {
-     id String @id @default(uuid())
+  id String @id @default(uuid())
   name             String?
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
+  stripeCustomerId String?
   users            User[]
   activities       Activity[]
   clients          Client[]
