@@ -4,7 +4,9 @@ import { stripe } from "@/lib/stripe";
 import { getUserSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 const DOMAIN = `$https://${process.env.NEXT_PUBLIC_VERCEL_URL}` || 'http://localhost:3000'
-export default function Billing() {
+export default async function Billing() {
+
+  const user = await getUserSession();
 
   async function createCheckoutSession(data:FormData) {
     
@@ -14,7 +16,7 @@ export default function Billing() {
 
     const prices = await stripe.prices.list({
 
-      lookup_keys: ['pro-monthly'],
+      lookup_keys: [lookup],
       expand: ['data.product'],
     });
     const session = await stripe.checkout.sessions.create({
@@ -27,6 +29,11 @@ export default function Billing() {
   
         },
       ],
+      subscription_data: {
+        metadata: {
+          tenantId: user.tenant.id
+        }
+      },
       mode: 'subscription',
       success_url: `http://localhost:3000/admin/billing/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `http://localhost:3000/admin/billing?canceled=true`,
@@ -61,15 +68,9 @@ export default function Billing() {
 
             <div>
               <div>
-                <h1>Your plan</h1>
+                <h1>Monthly</h1>
                 <p>upgrade or downgrade whenever you want!</p>
               </div>
-
-                <div className="flex">
-                    Content
-                </div>
-
-
 
           <form action={createCheckoutSession}>
           <input type="hidden" name="lookup_key" value="pro-monthly" />
@@ -79,12 +80,28 @@ export default function Billing() {
 
 
           <div>
+          <form action={createPortal}>
+            <Button type="submit">Manage</Button>
+          </form>
+          </div>
+
+
+{/*  */}
+
+          <div>
               <div>
-                  <h1>Manage your plan</h1>
-                  <p>Manage your plan here</p>
+                <h1>Yearly</h1>
+                <p>upgrade or downgrade whenever you want!</p>
               </div>
 
+          <form action={createCheckoutSession}>
+          <input type="hidden" name="lookup_key" value="yearly-pro" />
+            <Button type="submit">Upgrade</Button>
+          </form>
+          </div>
 
+
+          <div>
           <form action={createPortal}>
             <Button type="submit">Manage</Button>
           </form>

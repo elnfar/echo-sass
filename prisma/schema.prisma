@@ -23,7 +23,7 @@ model Tenant {
   updatedAt        DateTime   @updatedAt
   stripeCustomerId String?
   plan             Plan   @default(FREE)
-  stripeCheckAt     DateTime?
+  expirationDate   DateTime? 
   users            User[]
   activities       Activity[]
   clients          Client[]

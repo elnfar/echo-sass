@@ -21,7 +21,8 @@ export async function GET(req:NextRequest) {
             id:user.tenant.id
         },
         data: {
-            stripeCustomerId:customerId
+            stripeCustomerId:customerId,
+            plan:'PRO'
         }
     })
 
