@@ -16,28 +16,41 @@ enum Plan {
   PRO
 }
 
+enum Role {
+  OWNER
+  ADMIN
+  BILLING
+
+  USER
+  TRACKER
+  VIEWER
+}
+
+
 model Tenant {
   id String @id @default(uuid())
   name             String?
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
-  stripeCustomerId String?
-  plan             Plan   @default(FREE)
-  expirationDate   DateTime? 
+  plan             Plan       @default(FREE)
+  expirationDate   DateTime? // NULL -> means no expiration
+  inviteKey        String @unique  @default(uuid())
   users            User[]
   activities       Activity[]
   clients          Client[]
   projects         Project[]
 }
 
+
 model User {
-  id String @id @default(uuid())
+id String @id @default(uuid())
   email      String     @unique
   name       String?
   avatar     String?
+  role       Role       @default(VIEWER)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  tenantId   String
+  tenantId   String   
   tenant     Tenant     @relation(fields: [tenantId], references: [id])
   activities Activity[]
 

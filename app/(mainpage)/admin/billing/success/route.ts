@@ -22,6 +22,7 @@ export async function GET(req:NextRequest) {
         },
         data: {
             stripeCustomerId:customerId,
+            expirationDate:null,
             plan:'PRO'
         }
     })

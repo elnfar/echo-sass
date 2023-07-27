@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
+import { cookies } from 'next/headers'
 
 const authOption: NextAuthOptions = {
   session: {
@@ -19,33 +20,38 @@ const authOption: NextAuthOptions = {
       if (!profile?.email) {
         throw new Error('No profile')
       }
+
+
+      const inviteKey = cookies().get('invite_key')?.value
+
       await prisma.user.upsert({
         where: {
-          email: profile?.email
+          email: profile.email
         },
         create: {
-          email: profile?.email,
-          name: profile?.name,
+          email: profile.email,
+          name: profile.name,
           avatar: (profile as any).picture,
-          tenant:{
-            create:{}
-          },
+          role: inviteKey ? 'USER' : 'OWNER',
+          tenant: inviteKey
+            ? {
+                connect: {
+                  inviteKey
+                }
+              }
+            : {
+                create: {}
+              }
         },
         update: {
-          name: profile?.name,
+          name: profile.name,
           avatar: (profile as any).picture
         }
-        })
+      })
+
       return true
     },
-    async session({ session, token }:any) {
-      
-      console.log(session,token,"here you gooo");
-    
-      session.user.id = token.id
-      session.user.tenant = token.tenant
-      return session
-    },
+    session,
     async jwt({ token, user, account, profile }) {
       console.log({ token, account, profile, user })
       if (profile) {

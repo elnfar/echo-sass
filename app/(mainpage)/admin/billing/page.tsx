@@ -78,57 +78,19 @@ export default async function Billing() {
           <h1 className="text-3xl mb-4">Billing</h1>
 
           {
-            tenant?.plan === 'FREE' && (
+            tenant?.plan === 'FREE' ? (
               <div>
                 <FreePlan/>
                 <Upgrade/>
               </div>
+            ):(
+              <ProPlan/>
             )
           }
-           {/* <form action={createPortal}>
-            <h1>Manage Your Plan</h1>
-            <Button type="submit">Manage</Button>
-          </form> */}
-            {/* <div>
-              <div>
-                <h1>Monthly</h1>
-                <p>upgrade or downgrade whenever you want!</p>
-              </div>
 
-          <form action={createCheckoutSession}>
-          <input type="hidden" name="lookup_key" value="pro-monthly" />
-            <Button type="submit">Upgrade</Button>
-          </form>
-          </div>
-
-
-          <div>
-          <form action={createPortal}>
-            <Button type="submit">Manage</Button>
-          </form>
-          </div>
-
-
-{/*  */}
-{/* 
-          <div>
-              <div>
-                <h1>Yearly</h1>
-                <p>upgrade or downgrade whenever you want!</p>
-              </div>
-
-          <form action={createCheckoutSession}>
-          <input type="hidden" name="lookup_key" value="yearly-pro" />
-            <Button type="submit">Upgrade</Button>
-          </form>
-          </div>
-
-
-          <div>
-          <form action={createPortal}>
-            <Button type="submit">Manage</Button>
-          </form>
-          </div>  */}
+          {tenant?.expirationDate && tenant.plan === 'PRO' && (
+            <div>Your subscription will expire on {tenant.expirationDate.toLocaleDateString()}</div>
+          )}
 
       </div>
     )
@@ -163,6 +125,16 @@ function Upgrade() {
             <Button type="submit">Upgrade</Button>
         </form>
        </div>
+    </div>
+  )
+}
+function ProPlan() {
+  return (
+    <div>
+      <h1>You are a pro member!</h1>
+      <form action={createPortal}>
+          <Button type="submit">Manage</Button>
+      </form>
     </div>
   )
 }
