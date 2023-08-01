@@ -52,7 +52,7 @@ async function createPortal() {
   if(!tenant?.stripeCustomerId) throw new Error();
 
   const portalSession = await stripe.billingPortal.sessions.create({
-    customer: tenant?.stripeCustomerId,
+    customer: tenant.stripeCustomerId,
     return_url: `http://localhost:3000/admin/billing`,
   });
 

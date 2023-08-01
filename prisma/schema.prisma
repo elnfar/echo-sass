@@ -36,6 +36,7 @@ model Tenant {
   expirationDate   DateTime? // NULL -> means no expiration
   inviteKey        String @unique  @default(uuid())
   users            User[]
+  stripeCustomerId String?
   activities       Activity[]
   clients          Client[]
   projects         Project[]
