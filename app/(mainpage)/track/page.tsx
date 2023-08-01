@@ -9,6 +9,7 @@ import { ArrowRightIcon } from "@radix-ui/react-icons"
 import ActivityItem from "./activity-item"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Building2, ProjectorIcon } from "lucide-react"
+import CalendarView from "./calendar"
 
 
 
@@ -72,22 +73,11 @@ const NewActivity = ({activity,clients,projects}:NewActivityProps) => {
 
   }
 
-
-//   const clients = (await prisma.client.findMany({
-//     where: {
-//         tenantId:user.tenant.id
-//     }
-// })).map((client) => ({
-//     value:client.id,
-//     label:client.name
-// }))
-
-
   return (
     <div>
       <h2>What are you working on ?</h2>
 
-      <form action={activity ? stopActivity : upsertActivity}>
+      <form action={activity ? stopActivity : upsertActivity} className="">
         <div className="flex items-center space-x-4">
         <Input name="name" type="text" defaultValue={activity?.name || ''}/>
         <input type="hidden" name="id" defaultValue={activity?.id || ''}/>
@@ -208,6 +198,8 @@ export default async function TrackTimePage() {
     <main  className="container py-4">
       <NewActivity activity={currentActivity} projects={projects} clients={clients}/>
       <DailyActivities activities={dailyActivities}/>
+
+    <CalendarView endedActivities={dailyActivities}/>
     </main>
   )
 }
