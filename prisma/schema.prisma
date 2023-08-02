@@ -69,13 +69,15 @@ model Activity {
   tenant    Tenant    @relation(fields: [tenantId], references: [id])
   userId    String
   user      User      @relation(fields: [userId], references: [id])
-  clientId  String?   @db.Text
+  clientId  String?   
   client    Client?   @relation(fields: [clientId], references: [id])
-  projectId String?   @db.Text
+  projectId String?  
   project   Project?  @relation(fields: [projectId], references: [id])
 
   @@index([tenantId])
   @@index([userId])
+  @@index([projectId])
+  @@index([clientId])
 }
 
 model Client {
