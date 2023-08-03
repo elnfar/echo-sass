@@ -84,7 +84,7 @@ const NewActivity = ({activity,clients,projects}:NewActivityProps) => {
 
         {activity && ( <Duration startAt={activity.startAt}/>)} 
 
-        <h1>He</h1>
+        <h1>Hes</h1>
 
         <Select name="client">
                         <SelectTrigger className="w-[180px]">
