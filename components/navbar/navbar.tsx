@@ -16,7 +16,12 @@ const links = [
     {
         href:'/projects',
         label:'Projects'
-    }
+    },
+    {
+        href:'/calendar',
+        label:'Calendar'
+    },
+
 ]
 
 export default async function Navbar() {

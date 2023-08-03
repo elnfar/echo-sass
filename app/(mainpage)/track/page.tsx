@@ -8,7 +8,7 @@ import Duration from "./duration"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
 import ActivityItem from "./activity-item"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Building2, ProjectorIcon } from "lucide-react"
+import { Building2, Play, ProjectorIcon, StopCircle } from "lucide-react"
 import CalendarView from "./calendar"
 
 
@@ -75,12 +75,15 @@ const NewActivity = ({activity,clients,projects}:NewActivityProps) => {
 
   return (
     <div>
-      <h2>What are you working on ?</h2>
-
       <form action={activity ? stopActivity : upsertActivity} className="">
         <div className="flex items-center space-x-4">
         <Input name="name" type="text" defaultValue={activity?.name || ''}/>
         <input type="hidden" name="id" defaultValue={activity?.id || ''}/>
+
+        <Button type="submit" value="submit">{activity ? <StopCircle/>: <Play />}</Button>
+
+        {activity && ( <Duration startAt={activity.startAt}/>)} 
+
         <Select name="client">
                         <SelectTrigger className="w-[180px]">
                           <Building2 size={32}/>
@@ -115,8 +118,7 @@ const NewActivity = ({activity,clients,projects}:NewActivityProps) => {
 
 
 
-        {activity && ( <Duration startAt={activity.startAt}/>)} 
-        <Button type="submit" value="submit">{activity ? 'Stop':'Start'}</Button>
+
         </div>
       </form>
       
@@ -195,11 +197,12 @@ export default async function TrackTimePage() {
     }
   })
   return (
-    <main  className="container py-4">
-      <NewActivity activity={currentActivity} projects={projects} clients={clients}/>
+    <main  className="">
+      <div className="shadow-md w-full py-4 px-4">
+        <NewActivity activity={currentActivity} projects={projects} clients={clients}/>
+      </div>
+  
       <DailyActivities activities={dailyActivities}/>
-    <h1>ll</h1>
-    <CalendarView endedActivities={dailyActivities}/>
     </main>
   )
 }

@@ -6,7 +6,6 @@ const localizer = momentLocalizer(moment)
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { useState } from 'react';
 import { Activity } from '@prisma/client';
 
 
@@ -24,15 +23,16 @@ export default function CalendarView({endedActivities}:Props) {
       }));
 
   return (
-    <div>
+    <div className=''>
     <Calendar
-        events={events}
+      events={events}
       localizer={localizer}
       startAccessor="start"
       endAccessor="end"
       defaultView='month'
-      style={{ height: 550 }}
+      style={{ height: 700, }}
       titleAccessor="title"
+
     />
     </div>
   )
