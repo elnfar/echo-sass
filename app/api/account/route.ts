@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   const res = await prisma.tenant.updateMany({
+
+    
     where: {
       expirationDate: {
         lte: new Date()
@@ -12,6 +14,7 @@ export async function GET() {
       plan: 'FREE'
     }
   })
-
+  console.log(res);
+  
   return NextResponse.json({ updated: res.count })
 }
