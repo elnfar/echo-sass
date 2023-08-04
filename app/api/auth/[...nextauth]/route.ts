@@ -93,8 +93,9 @@ import { cookies } from 'next/headers'
 
 const authOption: NextAuthOptions = {
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
   },
+  secret:process.env.NEXTAUTH_URL,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
