@@ -35,7 +35,6 @@ export default async function page() {
       })
   return (
     <div>
-        <h1>Hi</h1>
         <CalendarView endedActivities={dailyActivities}/>
     </div>
   )
