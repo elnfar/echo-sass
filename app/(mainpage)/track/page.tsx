@@ -74,13 +74,13 @@ const NewActivity = ({activity,clients,projects}:NewActivityProps) => {
   }
 
   return (
-    <div>
-      <form action={activity ? stopActivity : upsertActivity} className="">
+    <div className="border-b pb-4 w-full">
+      <form action={activity ? stopActivity : upsertActivity} >
         <div className="flex items-center space-x-4">
-        <Input name="name" type="text" defaultValue={activity?.name || ''}/>
+        <Input name="name" type="text" className="py-6" placeholder="Track your activity" defaultValue={activity?.name || ''}/>
         <input type="hidden" name="id" defaultValue={activity?.id || ''}/>
 
-        <Button type="submit" value="submit">{activity ? <StopCircle/>: <Play />}</Button>
+        <Button type="submit" value="submit" className="bg-white border-2 hover:bg-white">{activity ? <StopCircle  className="text-black"/>: <Play  className="text-black"/>}</Button>
 
         {activity && ( <Duration startAt={activity.startAt}/>)} 
         <Select name="client">
@@ -194,7 +194,7 @@ export default async function TrackTimePage() {
     }
   })
   return (
-    <main  className="">
+    <main  className=" bg-purple-900 text-white ">
       <div className="shadow-md w-full py-4 px-4">
         <NewActivity activity={currentActivity} projects={projects} clients={clients}/>
       </div>

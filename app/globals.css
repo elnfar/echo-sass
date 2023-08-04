@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 
+.rbc-toolbar .rbc-btn-group {
+    color: white; /* change this to your desired color */
+}
+
+.rbc-toolbar .rbc-toolbar-label {
+    color: white; /* change this to your desired color */
+}
+
+.rbc-toolbar .rbc-btn-group button {
+    color: white; /* Change this to your desired color for Today, back and next buttons */
+}
 
 
 /* @import 'react-big-calendar/lib/addons/dragAndDrop/styles'; */

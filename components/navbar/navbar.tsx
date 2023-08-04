@@ -17,10 +17,6 @@ const links = [
         href:'/projects',
         label:'Projects'
     },
-    {
-        href:'/calendar',
-        label:'Calendar'
-    },
 
 ]
 
@@ -29,15 +25,15 @@ export default async function Navbar() {
     const user = await getUserSession();
 
   return (
-    <div className="shadow">
+    <div className=" border-b bg-purple-900 text-white">
         <div className="flex px-4 py-2 items-center">
             <div className="container flex items-center mx-auto space-x-4 py-4">
                 <Link href='/'>EchoT</Link>
 
                 <nav>
-                    <ul className="flex gap-4">
+                    <ul className="flex gap-4 border-l pl-4">
                         {links.map(({href,label}) => (
-                            <li key={label}>
+                            <li key={label} className="uppercase font-medium font-sans ">
                                 <Link href={href}>{label}</Link>
                             </li>
                         ))}
