@@ -8,6 +8,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_PRISMA_URL")
+  shadowDatabaseUrl = env("DATABASE_PRISMA_URL_NON_POOLING") // used for migrations
 }
 
 enum Plan {
