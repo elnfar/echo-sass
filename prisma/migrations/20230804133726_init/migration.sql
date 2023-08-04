@@ -56,6 +56,7 @@ CREATE TABLE "Client" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "tenantId" TEXT NOT NULL,
+    "instats" TEXT,
 
     CONSTRAINT "Client_pkey" PRIMARY KEY ("id")
 );
