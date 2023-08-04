@@ -15,3 +15,5 @@ export async function GET() {
 
   return NextResponse.json({ updated: res.count })
 }
+
+console.log('Hi');
