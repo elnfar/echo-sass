@@ -1,4 +1,5 @@
 import { User, getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
 export const session = async ({ session, token }: any) => {
   session.user.id = token.id
@@ -12,6 +13,6 @@ export const getUserSession = async (): Promise<User> => {
       session
     }
   })
-  if (!authUserSession) throw new Error('unauthorized')
+  if (!authUserSession) redirect('/api/auth/signin')
   return authUserSession.user
 }

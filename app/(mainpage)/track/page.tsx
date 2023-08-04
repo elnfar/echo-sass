@@ -8,7 +8,7 @@ import Duration from "./duration"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
 import ActivityItem from "./activity-item"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Building2, Play, ProjectorIcon, StopCircle } from "lucide-react"
+import { Building2, FolderGit2, PersonStanding, Play, ProjectorIcon, StopCircle } from "lucide-react"
 import CalendarView from "./calendar"
 
 
@@ -83,13 +83,9 @@ const NewActivity = ({activity,clients,projects}:NewActivityProps) => {
         <Button type="submit" value="submit">{activity ? <StopCircle/>: <Play />}</Button>
 
         {activity && ( <Duration startAt={activity.startAt}/>)} 
-
-        <h1>Hes</h1>
-
         <Select name="client">
-                        <SelectTrigger className="w-[180px]">
-                          <Building2 size={32}/>
-                            <SelectValue placeholder="Assign a client" />
+                        <SelectTrigger className="w-[100px]">
+                          <PersonStanding size={32}/>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -103,9 +99,8 @@ const NewActivity = ({activity,clients,projects}:NewActivityProps) => {
                         </Select>
 
                         <Select name="project">
-                        <SelectTrigger className="w-[180px]">
-                          <ProjectorIcon size={32}/>
-                            <SelectValue placeholder="Assign a Project" />
+                        <SelectTrigger className="w-[100px]">
+                        <FolderGit2 size={32}/>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -204,7 +199,8 @@ export default async function TrackTimePage() {
         <NewActivity activity={currentActivity} projects={projects} clients={clients}/>
       </div>
   
-      <DailyActivities activities={dailyActivities}/>
+      {/* <DailyActivities activities={dailyActivities}/> */}
+      <CalendarView endedActivities={dailyActivities}/>
     </main>
   )
 }
