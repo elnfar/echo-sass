@@ -36,7 +36,7 @@ export default async function ClientsPage() {
     <div  className="container py-4">
      <ClientListHeader/>
       {clients.length > 0 ? <ClientList clients={clients}/>:<BlackSlide/>}
- 
+      .
     </div>
   )
 }
