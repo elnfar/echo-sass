@@ -4,15 +4,15 @@
 
 
 .rbc-toolbar .rbc-btn-group {
-    color: white; /* change this to your desired color */
+    color: black; /* change this to your desired color */
 }
 
 .rbc-toolbar .rbc-toolbar-label {
-    color: white; /* change this to your desired color */
+    color: black; /* change this to your desired color */
 }
 
 .rbc-toolbar .rbc-btn-group button {
-    color: white; /* Change this to your desired color for Today, back and next buttons */
+    color: black; /* Change this to your desired color for Today, back and next buttons */
 }
 
 

@@ -29,6 +29,10 @@ export default function Duration({startAt}:Props) {
     const hours = Math.floor(elapsed / 1000 / 60 / 60);
     const minutes = Math.floor((elapsed / 1000 / 60) % 60)
     const seconds = Math.floor((elapsed / 1000) % 60)
+
+
+  
+
   return (
     <div className="slashed-zero tabular-nums font-semibold">{pad(hours)}:{pad(minutes)}:{pad(seconds)}</div>
   )

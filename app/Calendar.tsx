@@ -26,7 +26,7 @@ const [events, setEvents] =  useState<any[]>([
 	eventName: "event 2",
 	startDate: dayjs("2023-04-01"),
 	endDate: dayjs("2023-04-30"),
-	eventBgColor: "purple",
+	eventBgColor: "",
 	eventTextColor: "white",
 },
 {

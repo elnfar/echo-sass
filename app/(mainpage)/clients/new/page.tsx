@@ -23,13 +23,13 @@ export default async function NewClientsPage() {
     }
 
     return (
-      <div  className="container py-4">
-        <h2>Create a new client</h2>
+      <div  className="container py-4 flex justify-center items-center h-[70vh] flex-col gap-4">
+        <h2 className="text-[3rem]">Create a new client</h2>
         
         <form action={
             onCreate
         } 
-        className="flex gap-4"
+        className="flex gap-4 flex-col w-[700px]"
         >
             <Input type="text" name="name" placeholder="Client name"/>
             <Input type="color" name="color" placeholder="Color"/>

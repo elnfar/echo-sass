@@ -21,7 +21,7 @@ function eventStyleGetter(event:any, start:any, end:any, isSelected:any) {
       borderRadius: '10px',
       opacity: 1,
       color: 'white',
-      border: '0px',
+      border: '2px',
       display: 'block'
   };
   return {
@@ -46,20 +46,19 @@ export default function CalendarView({endedActivities}:Props) {
       }));
 
 
-      const eventStart = events.map((item) => item.start)
 
 
   return (
-    <div className='text-white'>
+    <div className=''>
     <Calendar
       events={events}
       localizer={localizer}
       startAccessor="start"
       endAccessor="end"
       defaultView='month'
-      style={{ height: 700, }}
+      style={{ height: 630, }}
       titleAccessor="title"
-      className='text-white'
+      className='text-black'
       onSelectSlot={() => setOpenModal(true)}
       eventPropGetter={(eventStyleGetter)}
     components={{

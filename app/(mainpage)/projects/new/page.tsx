@@ -43,8 +43,8 @@ export default async function CreateProjectPage() {
     }
 
     return (
-        <form action={createProject}>
-
+        <form action={createProject} className="flex items-center justify-center flex-col h-[70vh] gap-7">
+                <h1 className="text-[3rem] font-bold">Create Project</h1>
                 <div className="grid w-full max-w-sm items-center gap-1.5">
                     <Label htmlFor="name">Name</Label>
                     <Input type="name" name="name" id="name" placeholder="Project Name" required />

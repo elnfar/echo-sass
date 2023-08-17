@@ -43,14 +43,14 @@ export default async function ClientsPage({params}:ClientPageProps) {
     }
 
     return (
-      <div  className="container py-4">
-            <div>
-        <h2>Client</h2>
+      <div  className="container py-16 flex gap-4">
+                  <h1 className="text-[4rem]">{client.name}</h1>
+   
     
         <Dialog>
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <MoreHorizontal/>
+                <Button>Manage</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuItem>
@@ -80,9 +80,8 @@ export default async function ClientsPage({params}:ClientPageProps) {
             </DialogContent>
         </Dialog>
 
-</div>
-            <h3>{client.name}</h3>
-      </div>
+    </div>
+  
     )
   }
   

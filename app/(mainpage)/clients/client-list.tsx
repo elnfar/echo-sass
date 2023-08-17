@@ -9,10 +9,11 @@ type ClientListProps = {
   
 export const ClientList = ({clients}:ClientListProps) => {
     return (
-      <ul>
+      <ul className="flex flex-col gap-5">
         {clients.map((client) => (
-          <li key={client.id}>
-            <Link href={`/clients/${client.id}`}>{client.name}</Link>
+          <li key={client.id} className=" flex items-center gap-7">
+            <Link className="text-[2rem]" href={`/clients/${client.id}`}>{client.name}</Link>
+            <p className=" text-neutral-600 text-xs">click to manage the client</p>
             </li>
         ))}
       </ul>
@@ -22,7 +23,7 @@ export const ClientList = ({clients}:ClientListProps) => {
 
   export const ClientListHeader = () => {
     return (
-      <div className="flex justify-between items-center">
+      <div className="flex gap-4 items-center">
         <h2 className="text-lg font-medium mb-2">Clients</h2>
         <Button asChild>
           <Link href="/clients/new">Create</Link>

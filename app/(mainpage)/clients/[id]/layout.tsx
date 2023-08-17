@@ -28,10 +28,13 @@ export default async function ClientLayout({
 
   return (
     <html lang="en">
-      <ClientListHeader/>
-        <ClientList clients={clients}/>
-        {children}
+      <div className=' container py-16'>
+        <ClientListHeader/>
+          <ClientList clients={clients}/>
+          {children}
 
+      </div>
+    
     </html>
   )
 }

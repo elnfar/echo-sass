@@ -33,10 +33,12 @@ export default async function ClientsPage() {
   })
   
   return (
-    <div  className="container py-4">
+    <div  className="container py-4 space-y-6">
      <ClientListHeader/>
+
+     <div className="flex">
       {clients.length > 0 ? <ClientList clients={clients}/>:<BlackSlide/>}
-      .
+     </div>
     </div>
   )
 }

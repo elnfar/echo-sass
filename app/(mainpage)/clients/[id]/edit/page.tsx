@@ -52,7 +52,7 @@ export default async function ClientsEditPage({params}:ClientPageProps) {
         return redirect('/clients')
     }
     return (
-            <form action={editClient}>
+            <form action={editClient} className="py-6 flex flex-col gap-4 items-start">
                 <h2>Edit Client</h2>
                 <input type="hidden" defaultValue={client.id} />
                 <Input type="text" name="name" placeholder="Client name" defaultValue={client.name || ''}/>

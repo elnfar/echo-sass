@@ -73,6 +73,7 @@ const NewActivity = ({activity,clients,projects}:NewActivityProps) => {
 
   }
 
+
   return (
     <div className="border-b pb-4 w-full">
       <form action={activity ? stopActivity : upsertActivity} >
@@ -194,7 +195,7 @@ export default async function TrackTimePage() {
     }
   })
   return (
-    <main  className=" bg-purple-900 text-white ">
+    <main  className="">
       <div className="shadow-md w-full py-4 px-4">
         <NewActivity activity={currentActivity} projects={projects} clients={clients}/>
       </div>
